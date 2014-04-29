@@ -8,7 +8,7 @@
 
 (defn foo [] "hello")
 
-;;(def foo (fn [] "hello"))
+;;(def foo2 (fn [] "hello"))
 
 ;;foo
 
@@ -32,8 +32,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defn multiply-by-2 [x]
-  (* x 2))
+(defn multiply-by-2 [n]
+  (* n 2))
 
 ;;(multiply-by-2 2)
 
@@ -43,5 +43,46 @@
 
 ;;(map multiply-by-2 our-array)
 
+;;(def our-doubled-numbers
+;;  (map multiply-by-2 our-array))
+
+;;our-array
+
+;;(defn add-ten [n]
+;;  (+ 10 n))
+
+;;(map add-ten our-array)
+
+;;our-array
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;(even? 2)
+
+;;(even? 3)
+
+;;(filter even? our-array)
+
+;;our-array
+
+;;(def our-even-numbers
+;;  (filter even? our-array))
+
+;;our-even-numbers
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;(defn sum [accumulator number]
+;;  (+ accumulator number))
+
+;;(sum 0 1)
+
+;;(sum 2 3)
+
+;;(reduce sum our-array)
+
+
+
+
+
+
