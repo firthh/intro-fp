@@ -81,6 +81,80 @@
 
 ;;(reduce sum our-array)
 
+;;(reduce + our-array)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn square [num]
+  (* num num))
+
+(defn div-by-5? [num]
+  (= 0 (mod num 5)))
+
+(defn sqr-div-by-5? [num]
+  (-> num
+      square
+      div-by-5?))
+
+;;(sqr-div-by-5? 5)
+
+;;(sqr-div-by-5? 10)
+
+
+;;(sqr-div-by-5? 2)
+
+;;(sqr-div-by-5? 3)
+
+;;(range)
+
+;;(take 10 (range))
+
+(def sum-of-first-10
+  (->> (range)
+       (filter sqr-div-by-5?)
+       ;;(take 10)
+       ;;(reduce +)
+       ))
+
+;;sum-of-first-10
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn sum-of-first [x]
+  (->> (range)
+       (filter sqr-div-by-5?)
+       (take 10)
+       (reduce +)))
+
+
+;;(sum-of-first 10)
+
+(defn read-then-store-numbers []
+  (-> (slurp "/Users/hugo/Documents/Work/intro-fp/numbers.txt")
+      sum-of-first
+      str
+      (#(spit "/Users/hugo/Documents/Work/intro-fp/out.txt" %))))
+
+
+;;(read-then-store-numbers)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
