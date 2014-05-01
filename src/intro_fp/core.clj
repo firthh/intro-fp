@@ -1,7 +1,6 @@
 (ns intro-fp.core)
 
 
-
 (def a 1)
 
 ;;a
@@ -15,12 +14,11 @@
 ;;(foo)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;; higher order functions
 
 (defn greeter [name]
   (fn [other-name]
     (str "Hello " other-name " I am " name)))
-
 
 ;;(def hugos-greeter
 ;; (greeter "Hugo"))
@@ -30,7 +28,7 @@
 ;;(hugos-greeter "Bill")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;; map - higher order function
 
 (defn multiply-by-2 [n]
   (* n 2))
@@ -56,6 +54,7 @@
 ;;our-array
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; filter - higher order function
 
 ;;(even? 2)
 
@@ -71,6 +70,7 @@
 ;;our-even-numbers
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; reduce - higher order function
 
 ;;(defn sum [accumulator number]
 ;;  (+ accumulator number))
@@ -84,6 +84,8 @@
 ;;(reduce + our-array)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; declerative programming - composition
+
 
 (defn square [num]
   (* num num))
@@ -120,6 +122,8 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; extention - functional core, impure outter shell
+
 
 (defn sum-of-first [x]
   (->> (range)
@@ -138,25 +142,3 @@
 
 
 ;;(read-then-store-numbers)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
