@@ -3,29 +3,55 @@
 
 (def a 1)
 
-;;a
+a
 
 (defn foo [] "hello")
 
-;;(def foo2 (fn [] "hello"))
+(def foo2 (fn [] "hello"))
 
-;;foo
+foo
 
-;;(foo)
+foo2
+
+(foo)
+
+(foo2)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; higher order functions
+
+;;funtion that takes a function
+
+(defn sum [number1 number2]
+  (+ number1 number2))
+
+(defn do-fun [fun]
+  (fun 1 1 1 1))
+
+(do-fun +)
+(+ 1 1 1 1)
+
+(do-fun -)
+(- 1 1 1 1)
+
+(do-fun str)
+
+;;(do-fun sum)
+;;(do-fun 1)
+
+
+;;function that returns a function
 
 (defn greeter [name]
   (fn [other-name]
     (str "Hello " other-name " I am " name)))
 
-;;(def hugos-greeter
-;; (greeter "Hugo"))
+(def hugos-greeter
+ (greeter "Hugo"))
 
-;;hugos-greeter
+hugos-greeter
 
-;;(hugos-greeter "Bill")
+(hugos-greeter "Bill")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; map - higher order function
@@ -33,55 +59,57 @@
 (defn multiply-by-2 [n]
   (* n 2))
 
-;;(multiply-by-2 2)
+(multiply-by-2 2)
 
-;;(multiply-by-2 1024)
+(multiply-by-2 1024)
 
 (def our-array '(1, 2, 3, 4, 5))
 
-;;(map multiply-by-2 our-array)
+(map multiply-by-2 our-array)
 
-;;(def our-doubled-numbers
-;;  (map multiply-by-2 our-array))
+(def our-doubled-numbers
+  (map multiply-by-2 our-array))
 
-;;our-array
+our-array
 
-;;(defn add-ten [n]
-;;  (+ 10 n))
+(defn add-ten [n]
+  (+ 10 n))
 
-;;(map add-ten our-array)
+(map add-ten our-array)
 
-;;our-array
+our-array
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; filter - higher order function
 
-;;(even? 2)
+(even? 2)
 
-;;(even? 3)
+(even? 3)
 
-;;(filter even? our-array)
+(filter even? our-array)
 
-;;our-array
+our-array
 
-;;(def our-even-numbers
-;;  (filter even? our-array))
+(def our-even-numbers
+  (filter even? our-array))
 
-;;our-even-numbers
+our-even-numbers
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; reduce - higher order function
 
-;;(defn sum [accumulator number]
-;;  (+ accumulator number))
+(defn sum [accumulator number]
+  (+ accumulator number))
 
-;;(sum 0 1)
+(sum 0 1)
 
-;;(sum 2 3)
+(sum 2 3)
 
-;;(reduce sum our-array)
+(reduce sum our-array)
 
-;;(reduce + our-array)
+(reduce + our-array)
+
+;;MAX
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; declerative programming - composition
@@ -94,31 +122,29 @@
   (= 0 (mod num 5)))
 
 (defn sqr-div-by-5? [num]
-  (-> num
-      square
-      div-by-5?))
+  (div-by-5? (square num)))
 
-;;(sqr-div-by-5? 5)
+(sqr-div-by-5? 5)
 
-;;(sqr-div-by-5? 10)
+(sqr-div-by-5? 10)
 
 
-;;(sqr-div-by-5? 2)
+(sqr-div-by-5? 2)
 
-;;(sqr-div-by-5? 3)
+(sqr-div-by-5? 3)
 
 ;;(range)
 
-;;(take 10 (range))
+(take 10 (range))
 
 (def sum-of-first-10
   (->> (range)
        (filter sqr-div-by-5?)
-       ;;(take 10)
-       ;;(reduce +)
+       (take 10)
+       (reduce +)
        ))
 
-;;sum-of-first-10
+  sum-of-first-10
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -132,7 +158,7 @@
        (reduce +)))
 
 
-;;(sum-of-first 10)
+(sum-of-first 10)
 
 (defn read-then-store-numbers []
   (-> (slurp "/Users/hugo/Documents/Work/intro-fp/numbers.txt")
