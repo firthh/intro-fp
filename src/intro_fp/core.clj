@@ -1,170 +1,224 @@
 (ns intro-fp.core)
 
+;; (def a 1)
+;; a
 
-(def a 1)
+;; (def hugo-string "hugo")
+;; hugo-string
 
-a
+;; (def hugo-keyword :hugo-firth)
+;; hugo-keyword
 
-(defn foo [] "hello")
+;; (def hugo-vector ["hugo" "firth"])
+;; (first hugo-vector)
 
-(def foo2 (fn [] "hello"))
+;; (def hugo-map
+;;   {
+;;    :name "hugo"
+;;    :last-name "firth"
+;;    })
 
-foo
+;; (defn foo [] "hello")
 
-foo2
+;; foo
 
-(foo)
+;; (foo)
 
-(foo2)
+;; (defn foo2 [name]
+;;   (str "hello " name))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; higher order functions
+;; (foo2 "hugo")
 
-;;funtion that takes a function
 
-(defn sum [number1 number2]
-  (+ number1 number2))
+;; "It is better to have 100 functions operate on one data structure than to have 10 functions operate on 10 data structures." - Alan J. Perlis
 
-(defn do-fun [fun]
-  (fun 1 1 1 1))
 
-(do-fun +)
-(+ 1 1 1 1)
 
-(do-fun -)
-(- 1 1 1 1)
 
-(do-fun str)
 
-;;(do-fun sum)
-;;(do-fun 1)
 
 
-;;function that returns a function
 
-(defn greeter [name]
-  (fn [other-name]
-    (str "Hello " other-name " I am " name)))
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; higher order functions
 
-(def hugos-greeter
- (greeter "Hugo"))
+;; ;; funtion that takes a function
 
-hugos-greeter
+;; (defn sum [number1 number2]
+;;  (+ number1 number2))
+;; (sum 1 3)
 
-(hugos-greeter "Bill")
+;; (defn do-fun [fun]
+;;  (fun 1 1 1 1))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; map - higher order function
+;; (do-fun +)
+;; (+ 1 1 1 1)
 
-(defn multiply-by-2 [n]
-  (* n 2))
+;; (do-fun -)
+;; (- 1 1 1 1)
 
-(multiply-by-2 2)
+;; (do-fun str)
+;; (str 1 1 1 1)
 
-(multiply-by-2 1024)
 
-(def our-array '(1, 2, 3, 4, 5))
+;; dynamic typing means we can pass anything to that function
+;; (do-fun sum)
+;; (do-fun 1)
 
-(map multiply-by-2 our-array)
 
-(def our-doubled-numbers
-  (map multiply-by-2 our-array))
+;; example for the refactoring dojo
 
-our-array
+;; (defn positive? [num]
+;;   (> num 0))
+;; (defn negative? [num]
+;;   (> num 0))
 
-(defn add-ten [n]
-  (+ 10 n))
+;; (defn counter [func col]
+;;   (count (filter func col)))
 
-(map add-ten our-array)
 
-our-array
+;; (counter even? [1 2 3 4 5 6 7 8 9 10])
+;; (counter odd? [1 2 3 4 5 6 7 8 9 10])
+;; (counter positive? [-1 -2 -3 -4 -5 6 7 8 9 10])
+;; (counter negative? [-1 -2 -3 -4 -5 6 7 8 9 10])
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; filter - higher order function
 
-(even? 2)
 
-(even? 3)
 
-(filter even? our-array)
 
-our-array
 
-(def our-even-numbers
-  (filter even? our-array))
+;; ;; function that returns a function
 
-our-even-numbers
+;; (defn greeter [name]
+;;  (fn [other-name]
+;;    (str "Hello " other-name " I am " name)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; reduce - higher order function
+;; (def hugos-greeter
+;;   (greeter "Hugo"))
 
-(defn sum [accumulator number]
-  (+ accumulator number))
+;; hugos-greeter
 
-(sum 0 1)
+;; (hugos-greeter "Bill")
 
-(sum 2 3)
+;; ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; map - higher order function
 
-(reduce sum our-array)
+;; (defn multiply-by-2 [n]
+;;  (* n 2))
 
-(reduce + our-array)
+;; (multiply-by-2 2)
 
-;;MAX
+;; (multiply-by-2 1024)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; declerative programming - composition
+;; (def our-array [1 2 3 4 5])
 
+;; (map multiply-by-2 our-array)
 
-(defn square [num]
-  (* num num))
+;; (def our-doubled-numbers
+;;   (map multiply-by-2 our-array))
 
-(defn div-by-5? [num]
-  (= 0 (mod num 5)))
+;; our-array
 
-(defn sqr-div-by-5? [num]
-  (div-by-5? (square num)))
+;; (defn add-ten [n]
+;;  (+ 10 n))
 
-(sqr-div-by-5? 5)
+;; (map add-ten our-array)
 
-(sqr-div-by-5? 10)
+;; our-array
 
+;; ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; filter - higher order function
 
-(sqr-div-by-5? 2)
+;; (even? 2)
 
-(sqr-div-by-5? 3)
+;; (even? 3)
 
-;;(range)
+;; (filter even? our-array)
 
-(take 10 (range))
+;; our-array
 
-(def sum-of-first-10
-  (->> (range)
-       (filter sqr-div-by-5?)
-       (take 10)
-       (reduce +)
-       ))
+;; (def our-even-numbers
+;;  (filter even? our-array))
 
-  sum-of-first-10
+;; our-even-numbers
 
+;; ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; reduce - higher order function
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; extention - functional core, impure outter shell
+;; (defn sum [accumulator number]
+;;  (+ accumulator number))
 
+;; (sum 0 1)
 
-(defn sum-of-first [x]
-  (->> (range)
-       (filter sqr-div-by-5?)
-       (take 10)
-       (reduce +)))
+;; (sum 2 3)
 
+;; (reduce sum 0 our-array)
 
-(sum-of-first 10)
+;; (reduce + 0 our-array)
 
-(defn read-then-store-numbers []
-  (-> (slurp "/Users/hugo/Documents/Work/intro-fp/numbers.txt")
-      sum-of-first
-      str
-      (#(spit "/Users/hugo/Documents/Work/intro-fp/out.txt" %))))
+;; ;; MAX
 
+;; (defn max [number1 number2]
+;;  (if (> number1 number2)
+;;    number1
+;;    number2))
 
-;;(read-then-store-numbers)
+;; (reduce max our-array)
+
+;; ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; declerative programming - composition
+
+
+;; (defn square [num]
+;;   (* num num))
+
+;; (square 5)
+
+;; (defn div-by-5? [num]
+;;   (= 0 (mod num 5)))
+
+;; (div-by-5? 6)
+
+;; (defn sqr-div-by-5? [num]
+;;   (div-by-5? (square num)))
+
+;; (sqr-div-by-5? 5)
+
+;; (sqr-div-by-5? 10)
+
+
+;; (sqr-div-by-5? 2)
+
+;; (sqr-div-by-5? 3)
+
+;; (range)
+
+;; (take 10 (range))
+
+;; (def sum-of-first-1
+;;   (->> (range)
+;;        (filter sqr-div-by-5?)
+;; ;;        (take 10)
+;; ;;        (reduce +)
+;; ))
+
+;;   sum-of-first-10
+
+;; concurrency
+
+;; (defn long-op [x] (Thread/sleep 10) x)
+;; (def nums (take 1000 (range)))
+
+;; (time (doall (map long-op nums)))
+;; (time (doall (pmap long-op nums)))
+
+
+
+
+
+
+
+
+
+
+
