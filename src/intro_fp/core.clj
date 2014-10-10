@@ -1,33 +1,21 @@
 (ns intro-fp.core)
 
-;; (def a 1)
-;; a
+(def a 1)
+a
 
-;; (def hugo-string "hugo")
-;; hugo-string
+(def hugo-string "hugo")
+hugo-string
 
-;; (def hugo-keyword :hugo-firth)
-;; hugo-keyword
+(defn foo [] "hello")
 
-;; (def hugo-vector ["hugo" "firth"])
-;; (first hugo-vector)
+foo
 
-;; (def hugo-map
-;;   {
-;;    :name "hugo"
-;;    :last-name "firth"
-;;    })
+(foo)
 
-;; (defn foo [] "hello")
+(defn foo2 [name]
+  (str "hello " name))
 
-;; foo
-
-;; (foo)
-
-;; (defn foo2 [name]
-;;   (str "hello " name))
-
-;; (foo2 "hugo")
+(foo2 "hugo")
 
 
 ;; "It is better to have 100 functions operate on one data structure than to have 10 functions operate on 10 data structures." - Alan J. Perlis
@@ -39,186 +27,177 @@
 
 
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; higher order functions
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; higher order functions
 
-;; ;; funtion that takes a function
+;; funtion that takes a function
 
-;; (defn sum [number1 number2]
-;;  (+ number1 number2))
-;; (sum 1 3)
+(defn sum [number1 number2]
+  (+ number1 number2))
+(sum 1 3)
 
-;; (defn do-fun [fun]
-;;  (fun 1 1 1 1))
+(defn do-fun [fun]
+  (fun 1 1 1 1))
 
-;; (do-fun +)
-;; (+ 1 1 1 1)
+(do-fun +)
+(+ 1 1 1 1)
 
-;; (do-fun -)
-;; (- 1 1 1 1)
+(do-fun -)
+(- 1 1 1 1)
 
-;; (do-fun str)
-;; (str 1 1 1 1)
+(do-fun str)
+(str 1 1 1 1)
 
 
 ;; dynamic typing means we can pass anything to that function
-;; (do-fun sum)
-;; (do-fun 1)
+(do-fun sum)
+(do-fun 1)
 
 
-;; example for the refactoring dojo
+;; function that returns a function
 
-;; (defn positive? [num]
-;;   (> num 0))
-;; (defn negative? [num]
-;;   (> num 0))
+(defn greeter [name]
+  (fn [other-name]
+    (str "Hello " other-name " I am " name)))
+greeter
 
-;; (defn counter [func col]
-;;   (count (filter func col)))
+(def hugos-greeter
+  (greeter "Hugo"))
 
+hugos-greeter
 
-;; (counter even? [1 2 3 4 5 6 7 8 9 10])
-;; (counter odd? [1 2 3 4 5 6 7 8 9 10])
-;; (counter positive? [-1 -2 -3 -4 -5 6 7 8 9 10])
-;; (counter negative? [-1 -2 -3 -4 -5 6 7 8 9 10])
+(hugos-greeter "Bill")
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; map - higher order function
 
+(defn multiply-by-2 [n]
+  (* n 2))
 
+(multiply-by-2 2)
 
+(multiply-by-2 1024)
 
+(def our-array [1 2 3 4 5])
 
-;; ;; function that returns a function
+(map multiply-by-2 our-array)
 
-;; (defn greeter [name]
-;;  (fn [other-name]
-;;    (str "Hello " other-name " I am " name)))
+(def our-doubled-numbers
+  (map multiply-by-2 our-array))
 
-;; (def hugos-greeter
-;;   (greeter "Hugo"))
+our-array
 
-;; hugos-greeter
+(defn add-ten [n]
+  (+ 10 n))
 
-;; (hugos-greeter "Bill")
+(map add-ten our-array)
 
-;; ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; map - higher order function
+our-array
 
-;; (defn multiply-by-2 [n]
-;;  (* n 2))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; filter - higher order function
 
-;; (multiply-by-2 2)
+(even? 2)
 
-;; (multiply-by-2 1024)
+(even? 3)
 
-;; (def our-array [1 2 3 4 5])
+(filter even? our-array)
 
-;; (map multiply-by-2 our-array)
+(def our-even-numbers
+  (filter even? our-array))
 
-;; (def our-doubled-numbers
-;;   (map multiply-by-2 our-array))
+our-even-numbers
 
-;; our-array
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; reduce - higher order function
 
-;; (defn add-ten [n]
-;;  (+ 10 n))
+(defn sum [accumulator number]
+  (+ accumulator number))
 
-;; (map add-ten our-array)
+(sum 0 1)
 
-;; our-array
+(sum 2 3)
 
-;; ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; filter - higher order function
+(reduce sum 0 our-array)
 
-;; (even? 2)
-
-;; (even? 3)
-
-;; (filter even? our-array)
-
-;; our-array
-
-;; (def our-even-numbers
-;;  (filter even? our-array))
-
-;; our-even-numbers
-
-;; ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; reduce - higher order function
-
-;; (defn sum [accumulator number]
-;;  (+ accumulator number))
-
-;; (sum 0 1)
-
-;; (sum 2 3)
-
-;; (reduce sum 0 our-array)
-
-;; (reduce + 0 our-array)
+(reduce + 0 our-array)
 
 ;; ;; MAX
 
-;; (defn max [number1 number2]
-;;  (if (> number1 number2)
-;;    number1
-;;    number2))
+(defn max [number1 number2]
+  (if (> number1 number2)
+    number1
+    number2))
 
-;; (reduce max our-array)
+(reduce max our-array)
 
-;; ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; declerative programming - composition
-
-
-;; (defn square [num]
-;;   (* num num))
-
-;; (square 5)
-
-;; (defn div-by-5? [num]
-;;   (= 0 (mod num 5)))
-
-;; (div-by-5? 6)
-
-;; (defn sqr-div-by-5? [num]
-;;   (div-by-5? (square num)))
-
-;; (sqr-div-by-5? 5)
-
-;; (sqr-div-by-5? 10)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; declerative programming - composition
 
 
-;; (sqr-div-by-5? 2)
+(defn square [num]
+  (* num num))
 
-;; (sqr-div-by-5? 3)
+(square 5)
 
-;; (range)
+(defn div-by-5? [num]
+  (= 0 (mod num 5)))
 
-;; (take 10 (range))
+(div-by-5? 6)
 
-;; (def sum-of-first-1
-;;   (->> (range)
-;;        (filter sqr-div-by-5?)
-;; ;;        (take 10)
-;; ;;        (reduce +)
-;; ))
+(defn sqr-div-by-5? [num]
+  (div-by-5? (square num)))
 
-;;   sum-of-first-10
+(sqr-div-by-5? 5)
 
+(sqr-div-by-5? 10)
+
+
+(sqr-div-by-5? 2)
+
+(sqr-div-by-5? 3)
+
+(range 1000)
+
+(take 10 (range))
+
+(def sum-of-first-1
+  (->> (range)
+       (filter sqr-div-by-5?)
+       (take 10)
+       ;;        (reduce +)
+       ))
+
+sum-of-first-10
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; concurrency
 
-;; (defn long-op [x] (Thread/sleep 10) x)
-;; (def nums (take 1000 (range)))
+(defn long-op [x] (Thread/sleep 10) x)
+(def nums (take 1000 (range)))
 
-;; (time (doall (map long-op nums)))
-;; (time (doall (pmap long-op nums)))
+(time (doall (map long-op nums)))
+(time (doall (pmap long-op nums)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Laziness
+
+(take 5 (range))
+
+(take 10 (drop 5 (range)))
+
+(take 5 (repeat 5))
 
 
+(take 10 (drop 1 (cycle [:a :b :c :d :e :f :g])))
 
+(def alphabet "abcdefghijklmnopqrstuvwxyz")
 
+(defn offset [coll amount]
+  (take (count coll) (drop amount (cycle coll))))
 
+(offset (range 100) 95)
+(offset (range 100) 50)
 
-
-
-
-
-
+(apply str (offset alphabet 3))
+(apply str (offset alphabet 10))

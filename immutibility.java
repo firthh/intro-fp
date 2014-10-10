@@ -1,7 +1,7 @@
-public class USDollar {
+public class Dollars {
     private double value;
 
-    public USDollar(double value) {
+    public Dollars(double value) {
         this.value = value;
     }
 
